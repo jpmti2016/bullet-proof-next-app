@@ -1,0 +1,1 @@
+Server to static: regeneration
