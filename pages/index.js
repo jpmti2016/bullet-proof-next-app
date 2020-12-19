@@ -25,12 +25,13 @@ export default function Home({ postList }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const postList = await githubCMS.getPostList();
 
   return {
     props: {
       postList,
     },
+    revalidate: 2,
   };
 }
