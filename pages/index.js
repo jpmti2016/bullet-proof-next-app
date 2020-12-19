@@ -2,7 +2,7 @@ import Link from "next/link";
 import Theme from "../components/Theme";
 import ms from "ms";
 
-import { promises as fsPromises } from "fs";
+import githubCMS from "../lib/github-cms";
 
 export default function Home({ postList }) {
   return (
@@ -25,21 +25,8 @@ export default function Home({ postList }) {
   );
 }
 
-export async function getStaticProps() {
-  const markdownFiles = await fsPromises.readdir("data");
-
-  const postList = markdownFiles.map((filename) => {
-    const slug = filename.replace(/.md$/, "");
-    const [year, month, day, ...rest] = slug.split("-");
-    const createdAt = new Date(`${year} ${month} ${day}`).getTime();
-    const title = rest.join(" ");
-
-    return {
-      slug,
-      title,
-      createdAt,
-    };
-  });
+export async function getServerSideProps() {
+  const postList = await githubCMS.getPostList();
 
   return {
     props: {

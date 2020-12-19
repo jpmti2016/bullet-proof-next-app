@@ -9,15 +9,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arunoda/bulletproof-next-app"
+    "url": "git+https://github.com/jpmti2016/bulletproof-next-app"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/arunoda/bulletproof-next-app/issues"
+    "url": "https://github.com/jpmti2016/bulletproof-next-app/issues"
   },
-  "homepage": "https://github.com/arunoda/bulletproof-next-app#readme",
+  "homepage": "https://github.com/jpmti2016/bulletproof-next-app#readme",
   "dependencies": {
+    "@arunoda/git-cms": "^1.1.0",
     "markdown-to-jsx": "^7.1.0",
     "ms": "^2.1.2",
     "next": "9.5.2",
