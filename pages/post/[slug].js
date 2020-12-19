@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+import Head from "next/head";
 import Theme from "../../components/Theme";
 import Youtube from "../../components/Youtuve";
 import ms from "ms";
@@ -5,6 +7,17 @@ import Markdown from "markdown-to-jsx";
 import githubCMS from "../../lib/github-cms";
 
 export default function Post({ post }) {
+  const router = useRouter();
+  if (router.isFallback) {
+    return (
+      <Theme>
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+        404 - Page not found!
+      </Theme>
+    );
+  }
   return (
     <Theme>
       <div className="post">
@@ -30,12 +43,19 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }
 
 export async function getStaticProps({ params }) {
-  const post = await githubCMS.getPost(params.slug);
+  let post = null;
+  try {
+    post = await githubCMS.getPost(params.slug);
+  } catch (error) {
+    if (error.status !== 404) {
+      throw error;
+    }
+  }
 
   return {
     props: {
