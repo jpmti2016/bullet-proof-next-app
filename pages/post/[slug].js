@@ -24,12 +24,23 @@ export default function Post({ post }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getStaticPaths() {
+  const postList = await githubCMS.getPostList();
+  const paths = postList.map((post) => ({ params: { slug: post.slug } }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
   const post = await githubCMS.getPost(params.slug);
 
   return {
     props: {
       post,
     },
+    revalidate: 2,
   };
 }
