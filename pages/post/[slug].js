@@ -5,10 +5,15 @@ import Youtube from "../../components/Youtuve";
 import ms from "ms";
 import Markdown from "markdown-to-jsx";
 import githubCMS from "../../lib/github-cms";
+import Comments from "../../components/Comments";
 
 export default function Post({ post }) {
   const router = useRouter();
   if (router.isFallback) {
+    return <Theme>loading...</Theme>;
+  }
+
+  if (!post) {
     return (
       <Theme>
         <Head>
@@ -31,6 +36,10 @@ export default function Post({ post }) {
           >
             {post.content}
           </Markdown>
+        </div>
+        <div>
+          <b>Comments</b>
+          <Comments slug={post.slug} />
         </div>
       </div>
     </Theme>
